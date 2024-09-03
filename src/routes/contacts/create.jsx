@@ -1,4 +1,4 @@
-import React, {useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 
 import { useForm } from "@refinedev/antd";
@@ -10,9 +10,7 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import { SelectOptionWithAvatar } from "@/components";
 import { useCompaniesSelect } from "@/hooks/useCompaniesSelect";
 
-export const ContactCreatePage = ({
-  children,
-}) => {
+export const ContactCreatePage = ({ children }) => {
   const { list, replace } = useNavigation();
   const { pathname } = useLocation();
   const { data: user } = useGetIdentity();
@@ -93,7 +91,6 @@ export const ContactCreatePage = ({
               <Button
                 style={{ paddingLeft: 0 }}
                 type="link"
-                // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
                 icon={<PlusCircleOutlined />}
                 onClick={() => {
                   replace("company-create?to=/contacts/create");
@@ -106,7 +103,7 @@ export const ContactCreatePage = ({
             <Select
               {...selectProps}
               options={
-                queryResult.data.data.map(({ id, name, avatarUrl }) => ({
+                queryResult?.data?.data?.map(({ id, name, avatarUrl }) => ({
                   value: id,
                   label: (
                     <SelectOptionWithAvatar

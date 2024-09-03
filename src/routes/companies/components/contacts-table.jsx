@@ -269,7 +269,9 @@ const ContactForm = () => {
   };
 
   const { hasContacts } = useMemo(() => {
-    const hasContacts = contacts.length > 0;
+    // Ensure contacts is an array, defaulting to an empty array if undefined
+    const contactList = contacts || [];
+    const hasContacts = contactList.length > 0;
 
     return {
       hasContacts,

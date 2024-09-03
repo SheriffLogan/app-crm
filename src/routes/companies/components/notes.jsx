@@ -107,8 +107,8 @@ export const CompanyNoteForm = () => {
     >
       <CustomAvatar
         style={{ flexShrink: 0 }}
-        name={me.name}
-        src={me.avatarUrl}
+        name={me?.name || "Unknown"}
+        src={me?.avatarUrl}
       />
       <Form {...formProps} style={{ width: "100%" }} onFinish={handleOnFinish}>
         <Form.Item
@@ -141,7 +141,7 @@ export const CompanyNoteList = () => {
 
   const invalidate = useInvalidate();
 
-  const { data: notes } = useList<CompanyNote>({
+  const { data: notes } = useList({
     resource: "companyNotes",
     sorters: [
       {
@@ -193,15 +193,15 @@ export const CompanyNoteList = () => {
         width: "100%",
       }}
     >
-      {notes.data.map((item) => {
-        const isMe = me.id === item.createdBy.id;
+    {notes?.data?.map((item) => {
+      const isMe = me?.id === item?.createdBy?.id;
 
         return (
-          <div key={item.id} style={{ display: "flex", gap: "12px" }}>
+            <div key={item.id} style={{ display: "flex", gap: "12px" }}>
             <CustomAvatar
               style={{ flexShrink: 0 }}
-              name={item.createdBy.name}
-              src={item.createdBy.avatarUrl}
+              name={item?.createdBy?.name}
+              src={item?.createdBy?.avatarUrl}
             />
 
             <div

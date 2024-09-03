@@ -1,4 +1,4 @@
-import {useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useSearchParams } from "react-router-dom";
 
 import { useModalForm, useSelect } from "@refinedev/antd";
@@ -91,7 +91,7 @@ export const SalesCreatePage = ({ children }) => {
   }, [companyId]);
 
   const renderContactForm = () => {
-    if (!companyId) {
+    if (!companyId || !queryResult?.data?.data) {
       return null;
     }
 
@@ -99,8 +99,9 @@ export const SalesCreatePage = ({ children }) => {
       (company) => company.id === companyId,
     );
 
+    if (!selectedCompany) return null;
+
     const hasContact =
-      selectedCompany.contacts.nodes.length !== undefined &&
       selectedCompany.contacts.nodes.length > 0;
 
     if (hasContact) {
@@ -133,7 +134,6 @@ export const SalesCreatePage = ({ children }) => {
             name="contactName"
             rules={[{ required: true }]}
           >
-            {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
             <Input addonBefore={<UserOutlined />} placeholder="Contact name" />
           </Form.Item>
         </Col>
@@ -143,7 +143,6 @@ export const SalesCreatePage = ({ children }) => {
             name="contactEmail"
             rules={[{ required: true }]}
           >
-            {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
             <Input addonBefore={<MailOutlined />} placeholder="Contact email" />
           </Form.Item>
         </Col>
@@ -213,7 +212,6 @@ export const SalesCreatePage = ({ children }) => {
                   replace("company/create?to=/scrumboard/sales/create")
                 }
               >
-                {/* @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66 */}
                 <PlusCircleOutlined /> Add new company
               </Typography.Link>
             }
@@ -222,7 +220,7 @@ export const SalesCreatePage = ({ children }) => {
               placeholder="Please select company"
               {...selectProps}
               options={
-                queryResult.data.data.map((company) => ({
+                queryResult?.data?.data?.map((company) => ({
                   value: company.id,
                   label: (
                     <SelectOptionWithAvatar
@@ -259,7 +257,6 @@ export const SalesCreatePage = ({ children }) => {
               >
                 <InputNumber
                   min={0}
-                  // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
                   addonBefore={<DollarOutlined />}
                   placeholder="0,00"
                   formatter={(value) =>
@@ -278,7 +275,7 @@ export const SalesCreatePage = ({ children }) => {
               placeholder="Please select user"
               {...userSelectProps}
               options={
-                userQueryResult.data.data.map((user) => ({
+                userQueryResult?.data?.data?.map((user) => ({
                   value: user.id,
                   label: (
                     <SelectOptionWithAvatar

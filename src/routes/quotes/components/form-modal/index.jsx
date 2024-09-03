@@ -1,14 +1,10 @@
 import { useLocation, useParams, useSearchParams } from "react-router-dom";
 
 import { useModalForm } from "@refinedev/antd";
-import {
-
-  useNavigation,
-} from "@refinedev/core";
+import { useNavigation } from "@refinedev/core";
 
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Select, Spin } from "antd";
-
 
 import { useCompaniesSelect } from "@/hooks/useCompaniesSelect";
 import { useContactsSelect } from "@/hooks/useContactsSelect";
@@ -18,8 +14,6 @@ import {
   QUOTES_CREATE_QUOTE_MUTATION,
   QUOTES_UPDATE_QUOTE_MUTATION,
 } from "../../queries";
-
-
 
 export const QuotesFormModal = ({
   action,
@@ -69,6 +63,8 @@ export const QuotesFormModal = ({
 
   const isHaveOverModal = pathname.includes("company-create");
 
+  const initialValues = formProps?.initialValues || {};
+
   return (
     <Modal
       {...modalProps}
@@ -80,7 +76,6 @@ export const QuotesFormModal = ({
           onCancel();
           return;
         }
-        //TODO: modalProps.onCancel expect an event so, I used close. Actually both of them are same.
         close();
         list("quotes", "replace");
       }}
@@ -96,8 +91,8 @@ export const QuotesFormModal = ({
           </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
-            name={["salesOwnerId"]}
-            initialValue={formProps.initialValues.salesOwner.id}
+            name="salesOwnerId"
+            initialValue={initialValues.salesOwner?.id}
             label="Sales owner"
           >
             <Select
@@ -107,17 +102,15 @@ export const QuotesFormModal = ({
           </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
-            name={["companyId"]}
+            name="companyId"
             initialValue={
-              searchParams.get("companyId") ??
-              formProps.initialValues.company.id
+              searchParams.get("companyId") ?? initialValues.company?.id
             }
             label="Company"
             extra={
               <Button
                 style={{ paddingLeft: 0 }}
                 type="link"
-                // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
                 icon={<PlusCircleOutlined />}
                 onClick={() => replace(`company-create?to=${pathname}`)}
               >
@@ -132,8 +125,8 @@ export const QuotesFormModal = ({
           </Form.Item>
           <Form.Item
             rules={[{ required: true }]}
-            name={["contactId"]}
-            initialValue={formProps.initialValues.contact.id}
+            name="contactId"
+            initialValue={initialValues.contact?.id}
             label="Quote Contact"
           >
             <Select

@@ -1,11 +1,10 @@
-
 import {
   DragOverlay,
   useDraggable,
 } from "@dnd-kit/core";
 
 
-export const KanbanItem= ({
+export const KanbanItem = ({
   children,
   id,
   data,
@@ -34,7 +33,7 @@ export const KanbanItem= ({
       >
         {children}
       </div>
-      {active.id === id && (
+      {active && active.id === id && (
         // antd sider has z-index of 999
         <DragOverlay zIndex={1000}>
           <div

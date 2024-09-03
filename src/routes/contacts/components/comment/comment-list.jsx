@@ -45,7 +45,8 @@ const ContactCommentListItem = ({ item }) => {
   });
   const { data: me } = useGetIdentity();
 
-  const isMe = me.id === item.createdBy.id;
+  const isMe = me?.id === item?.createdBy?.id;
+
 
   return (
     <div style={{ display: "flex", gap: "12px" }}>
@@ -160,7 +161,7 @@ const ContactCommentListItem = ({ item }) => {
 export const ContactCommentList = () => {
   const { id } = useParsed();
 
-  const { data } = useList<ContactNote>({
+  const { data } = useList({
     resource: "contactNotes",
     filters: [{ field: "contact.id", operator: "eq", value: id }],
     sorters: [{ field: "createdAt", order: "desc" }],
@@ -182,9 +183,13 @@ export const ContactCommentList = () => {
         width: "100%",
       }}
     >
-      {data.data.map((item) => (
-        <ContactCommentListItem key={item.id} item={item} />
-      ))}
+      {data && data.data ? (
+        data.data.map((item) => (
+          <ContactCommentListItem key={item.id} item={item} />
+        ))
+      ) : (
+        <div>No data available</div> // You can also show a loader or a message here
+      )}
     </Space>
   );
 };

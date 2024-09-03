@@ -11,6 +11,8 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { Button, Card, Input, Select, Skeleton, Space, Table, Tag } from "antd";
+import { useUsersSelect } from "@/hooks/useUsersSelect";
+import { useDealStagesSelect } from "@/hooks/useDealStagesSelect";
 
 import { Participants, Text } from "@/components";
 import { currencyNumber } from "@/utilities";

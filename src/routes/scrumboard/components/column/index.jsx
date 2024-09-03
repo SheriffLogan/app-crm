@@ -27,7 +27,12 @@ export const KanbanColumn = ({
   });
 
   const onAddClickHandler = () => {
-    onAddClick({ id });
+    console.log('onAddClick:', typeof onAddClick);
+    if (typeof onAddClick === 'function') {
+      onAddClick({ id });
+    } else {
+      console.error('onAddClick is not a function');
+    }
   };
 
   return (

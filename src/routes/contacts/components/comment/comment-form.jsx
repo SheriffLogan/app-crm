@@ -63,11 +63,15 @@ export const ContactCommentForm = () => {
         borderBottom: "1px solid #F0F0F0",
       }}
     >
-      <CustomAvatar
-        style={{ flexShrink: 0 }}
-        name={me.name}
-        src={me.avatarUrl}
-      />
+      {me ? (
+        <CustomAvatar
+          style={{ flexShrink: 0 }}
+          name={me.name}
+          src={me.avatarUrl}
+        />
+      ) : (
+        <CustomAvatar style={{ flexShrink: 0 }} name="Guest" />
+      )}
       <Form {...formProps} style={{ width: "100%" }} onFinish={handleOnFinish}>
         <Form.Item
           name="note"

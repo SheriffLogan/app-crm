@@ -94,6 +94,10 @@ export const DashboardLatestActivities = ({
         audit.data.map(({ id, user, createdAt, action, targetId }) => {
           const deal =
             deals.data.find((task) => task.id === `${targetId}`) || undefined;
+            
+            if (!deal) {
+              return null; // Skip rendering this item if the deal is not found
+            }
 
           return (
             <div key={id} className={styles.item}>
@@ -101,8 +105,8 @@ export const DashboardLatestActivities = ({
                 <CustomAvatar
                   shape="square"
                   size={48}
-                  src={deal.company.avatarUrl}
-                  name={deal.company.name}
+                  src={deal?.company?.avatarUrl || ""}
+                  name={deal?.company?.name || "Unknown"}
                 />
               </div>
               <div className={styles.action}>
@@ -115,10 +119,10 @@ export const DashboardLatestActivities = ({
                     {user.name}
                   </Text>
                   <Text>{action === "CREATE" ? "created" : "moved"}</Text>
-                  <Text strong>{deal.title}</Text>
+                  <Text strong>{deal?.title}</Text>
                   <Text>deal</Text>
                   <Text>{action === "CREATE" ? "in" : "to"}</Text>
-                  <Text strong>{deal.stage.title || "Unassigned"}.</Text>
+                  <Text strong>{deal?.stage?.title || "Unassigned"}.</Text>
                 </Text>
               </div>
             </div>

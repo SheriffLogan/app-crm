@@ -26,8 +26,12 @@ export const CompanyTitleForm = () => {
     },
   });
 
-  const company = queryResult.data.data;
+  const company = queryResult.data ? queryResult.data.data : null;
   const loading = queryResult.isLoading;
+
+  if (loading || !company) {
+    return <Skeleton active />;
+  }
 
   return (
     <Form {...formProps}>
@@ -51,6 +55,7 @@ export const CompanyTitleForm = () => {
           <Form.Item name="name" required noStyle>
             <TitleInput
               loading={loading}
+              value={company.name}
               onChange={(value) => {
                 return onFinish({
                   name: value,
@@ -86,7 +91,6 @@ const TitleInput = ({
       editable={{
         onChange,
         triggerType: ["text", "icon"],
-        // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
         icon: <EditOutlined className={styles.titleEditIcon} />,
       }}
     >
@@ -108,6 +112,10 @@ const SalesOwnerInput = ({
 
   const { selectProps, queryResult } = useUsersSelect();
 
+  if (loading) {
+    return <Skeleton.Input size="small" style={{ width: 120 }} active />;
+  }
+
   return (
     <div
       className={styles.salesOwnerInput}
@@ -124,8 +132,7 @@ const SalesOwnerInput = ({
       >
         Sales Owner:
       </Text>
-      {loading && <Skeleton.Input size="small" style={{ width: 120 }} active />}
-      {!isEdit && !loading && (
+      {!isEdit && (
         <>
           <CustomAvatar
             size="small"
@@ -137,12 +144,11 @@ const SalesOwnerInput = ({
           <Text>{salesOwner.name}</Text>
           <Button
             type="link"
-            // @ts-expect-error Ant Design Icon's v5.0.1 has an issue with @types/react@^18.2.66
             icon={<EditOutlined className={styles.salesOwnerInputEditIcon} />}
           />
         </>
       )}
-      {isEdit && !loading && (
+      {isEdit && (
         <Form.Item name={["salesOwner", "id"]} noStyle>
           <Select
             {...selectProps}
@@ -161,7 +167,7 @@ const SalesOwnerInput = ({
               selectProps.onChange(value, option);
             }}
             options={
-              queryResult.data.data.map(({ id, name, avatarUrl }) => ({
+              queryResult.data?.data.map(({ id, name, avatarUrl }) => ({
                 value: id,
                 label: (
                   <SelectOptionWithAvatar

@@ -140,7 +140,7 @@ export const CompanyCreatePage = ({ isOverModal }) => {
             placeholder="Please sales owner user"
             {...selectProps}
             options={
-              queryResult.data.data.map((user) => ({
+              queryResult?.data?.data?.map((user) => ({
                 value: user.id,
                 label: (
                   <SelectOptionWithAvatar

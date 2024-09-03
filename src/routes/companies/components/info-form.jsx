@@ -22,13 +22,13 @@ import { COMPANY_INFO_QUERY } from "./queries";
 export const CompanyInfoForm = () => {
   const [activeForm, setActiveForm] = useState();
 
-  const { query: queryResult } = useShow<Company>({
+  const { query: queryResult } = useShow({
     meta: {
       gqlQuery: COMPANY_INFO_QUERY,
     },
   });
 
-  const data = queryResult.data.data;
+  const data = queryResult?.data?.data || {};
   const {
     totalRevenue,
     industry,
@@ -36,7 +36,7 @@ export const CompanyInfoForm = () => {
     businessType,
     country,
     website,
-  } = data || {};
+  } = data;
 
   const getActiveForm = (args) => {
     const { formName } = args;
@@ -52,7 +52,7 @@ export const CompanyInfoForm = () => {
     return "view";
   };
 
-  const loading = queryResult.isLoading;
+  const loading = queryResult?.isLoading;
 
   return (
     <Card

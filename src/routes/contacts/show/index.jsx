@@ -34,6 +34,8 @@ import {
   TextIcon,
 } from "@/components";
 import { TimezoneEnum } from "@/enums";
+import { useCompaniesSelect } from "@/hooks/useCompaniesSelect";
+import { useUsersSelect } from "@/hooks/useUsersSelect";
 
 import { ContactComment, ContactStatus } from "../components";
 import styles from "./index.module.css";

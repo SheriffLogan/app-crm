@@ -307,8 +307,8 @@ export const ProjectCardMemo = memo(ProjectCard, (prev, next) => {
     prev.id === next.id &&
     prev.title === next.title &&
     prev.dueDate === next.dueDate &&
-    prev.comments.totalCount === next.comments.totalCount &&
-    prev.checkList.length === next.checkList.length &&
-    prev.users.length === next.users.length
+    prev.comments?.totalCount === next.comments?.totalCount &&
+    (prev.checkList?.length ?? 0) === (next.checkList?.length ?? 0) &&
+    (prev.users?.length ?? 0) === (next.users?.length ?? 0)
   );
 });
